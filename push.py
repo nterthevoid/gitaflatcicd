@@ -77,33 +77,31 @@ def whereshouldigo():
     print()
     return(branch)
 
-def branchmerges(branch,fileandamessage):
+def branchmerges(branch):
     print('----Starting branch merge function. File changed for merge is = ', end = ' ')
-    file=fileandamessage[0]
-    message=fileandamessage[1]
     for filez in filenames:
         gadd(filez)
-    commit(file)
+    commit()
     push()
     print('current branch >> ',branch)
     if branch == 'test': 
         for filez in filenames:
             gadd(filez)
-        commit(file)
+        commit()
         push()
         gcmd='git checkout dev'
         gprint(gcmd)
         os.system(gcmd)
         for filez in filenames:
             gadd(filez)
-        gcmd='git merge test -m '+ message
+        gcmd='git merge test -m '+ random.choice(message)
         gprint(gcmd)
         os.system(gcmd)
 
     if branch =='dev': 
         for filez in filenames:
             gadd(filez)
-        commit(file)
+        commit()
         push()
         gcmd='git checkout master'
         gprint(gcmd)
@@ -111,7 +109,7 @@ def branchmerges(branch,fileandamessage):
         for filez in filenames:
             gadd(filez)        
         print()
-        gcmd='git merge dev -m '+ message
+        gcmd='git merge dev -m '+ random.choice(message)
         gprint(gcmd)
         os.system(gcmd)
         print()
@@ -119,7 +117,7 @@ def branchmerges(branch,fileandamessage):
     if branch =='master':
         for filez in filenames:
             gadd(filez)
-        commit(file)
+        commit()
         push()
         return(branch)
 
@@ -143,15 +141,14 @@ def gadd(filename):
     print()
     return(file)
 
-def commit(filename):
-    print('----Starting git commit function. File to be commited = ',filename)
-    file=filename
+def commit():
+    print('----Starting git commit function. File to be commited = ')
     amessage=random.choice(message)
     gcmd='git commit -m '+ amessage
     gprint(gcmd)
     os.system(gcmd)
     print()
-    return[file,amessage]
+    return[amessage]
 
 def push():
     print('----Starting push function. ')
@@ -189,20 +186,28 @@ if selection == '2'  :
     deletenclean()
 
 if selection == '1'  :
-    #build()
-    #buildbranch(branches)
-    print()
-    whereaminow()
-    who=whoami()
-    branch=whereshouldigo()
-    print('Changing to branch >>',branch)
+    loop = 'y'
+    while loop == 'y':
+        #build()
+        #buildbranch(branches)
+        print()
+        whereaminow()
+        who=whoami()
+        branch=whereshouldigo()
+        print('Changing to branch >>',branch)
 
-    if branch != 'master':
-        fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
-        push()
-        branchmerges(branch,fileandamessage)
-    if branch == 'master':
-        fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
-        push()
+        if branch != 'master':
+            #fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
+            filename=fileopen(random.choice(filenames))
+            gadd(filename)
+            commit()
+            push()
+            branchmerges(branch)
+        if branch == 'master':
+            #fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
+            filename=fileopen(random.choice(filenames))
+            gadd(filename)
+            commit()
+            push()
 if selection == '3'  :        
     gadd(fileopen(random.choice(filenames)))
