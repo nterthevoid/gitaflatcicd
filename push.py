@@ -180,34 +180,32 @@ def deletenclean():
         push()
     print()
 
-selection=input('select 1 for norm, 2 for clean')
 
-if selection == '2'  :
-    deletenclean()
+loop = 'y'
+cnt=0
+while loop == 'y':
+    cnt=cnt+1
+    #build()
+    #buildbranch(branches)
+    print()
+    whereaminow()
+    who=whoami()
+    branch=whereshouldigo()
+    print('Changing to branch >>',branch)
 
-if selection == '1'  :
-    loop = 'y'
-    while loop == 'y':
-        #build()
-        #buildbranch(branches)
-        print()
-        whereaminow()
-        who=whoami()
-        branch=whereshouldigo()
-        print('Changing to branch >>',branch)
-
-        if branch != 'master':
-            #fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
-            filename=fileopen(random.choice(filenames))
-            gadd(filename)
-            commit()
-            push()
-            branchmerges(branch)
-        if branch == 'master':
-            #fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
-            filename=fileopen(random.choice(filenames))
-            gadd(filename)
-            commit()
-            push()
-if selection == '3'  :        
-    gadd(fileopen(random.choice(filenames)))
+    if branch != 'master':
+        #fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
+        filename=fileopen(random.choice(filenames))
+        gadd(filename)
+        commit()
+        push()
+        branchmerges(branch)
+    if branch == 'master':
+        #fileandamessage=commit(gadd(fileopen(random.choice(filenames))))
+        filename=fileopen(random.choice(filenames))
+        gadd(filename)
+        commit()
+        push()
+    print('Count =', cnt)
+    if cnt >= 1000:
+        deletenclean()
